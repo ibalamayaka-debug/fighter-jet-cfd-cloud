@@ -35,7 +35,7 @@ export const App: React.FC = () => {
     showSliceY: false,
     showSliceZ: false,
     wireframe: false,
-    streamRadius: 0.065,
+    streamRadius: 0.022,
     sliceOpacity: 0.55,
   });
 
@@ -259,9 +259,9 @@ export const App: React.FC = () => {
             </div>
             <input
               type="range"
-              min={0.03}
-              max={0.14}
-              step={0.005}
+              min={0.008}
+              max={0.08}
+              step={0.002}
               value={view.streamRadius}
               onChange={(e) => setView({ ...view, streamRadius: Number(e.target.value) })}
             />

@@ -169,8 +169,8 @@ export const F16Viewer: React.FC<F16ViewerProps> = ({ lang, result, view, loadin
 
     // Actor 2: 3D Velocity-Colored Streamline Tubes (LEX & Wingtip Vortices)
     const tubeFilter = vtkTubeFilter.newInstance({
-      radius: 0.065,
-      numberOfSides: 6,
+      radius: 0.022,
+      numberOfSides: 8,
       capping: false,
     });
     const streamMapper = vtkMapper.newInstance();
@@ -185,7 +185,7 @@ export const F16Viewer: React.FC<F16ViewerProps> = ({ lang, result, view, loadin
     streamActor.setVisibility(false);
     streamActor.getProperty().setAmbient(0.35);
     streamActor.getProperty().setDiffuse(0.65);
-    streamActor.getProperty().setOpacity(0.92);
+    streamActor.getProperty().setOpacity(0.86);
     renderer.addActor(streamActor);
 
     // Actor 3: Centerline Vertical Velocity Slice (y ~ 0)
