@@ -37,6 +37,9 @@ export const App: React.FC = () => {
     wireframe: false,
     streamRadius: 0.022,
     sliceOpacity: 0.55,
+    palette: 'starry',
+    playing: true,
+    flowSpeed: 1.0,
   });
 
   const [result, setResult] = useState<F16SimResponse | null>(null);
@@ -209,6 +212,26 @@ export const App: React.FC = () => {
             <Eye size={14} /> {t.sectionVisual}
           </div>
 
+          <div className="select-row">
+            <span>{t.paletteLabel}</span>
+            <div className="palette-switch">
+              <button
+                type="button"
+                className={view.palette === 'starry' ? 'active' : ''}
+                onClick={() => setView({ ...view, palette: 'starry' })}
+              >
+                ✨ {t.paletteStarry}
+              </button>
+              <button
+                type="button"
+                className={view.palette === 'scientific' ? 'active' : ''}
+                onClick={() => setView({ ...view, palette: 'scientific' })}
+              >
+                {t.paletteScientific}
+              </button>
+            </div>
+          </div>
+
           <div className="toggle-list">
             <label className="checkbox-row">
               <input
@@ -251,6 +274,21 @@ export const App: React.FC = () => {
               <span>{t.wireframe}</span>
             </label>
           </div>
+
+          <label className="slider-row">
+            <div className="slider-header">
+              <span>{t.flowSpeed}</span>
+              <strong>{view.flowSpeed.toFixed(1)}×</strong>
+            </div>
+            <input
+              type="range"
+              min={0.3}
+              max={2.5}
+              step={0.1}
+              value={view.flowSpeed}
+              onChange={(e) => setView({ ...view, flowSpeed: Number(e.target.value) })}
+            />
+          </label>
 
           <label className="slider-row">
             <div className="slider-header">
@@ -363,7 +401,13 @@ export const App: React.FC = () => {
         )}
 
         <div className="viewer-wrapper">
-          <F16Viewer lang={lang} result={result} view={view} loading={loading} />
+          <F16Viewer
+            lang={lang}
+            result={result}
+            view={view}
+            onTogglePlay={() => setView((prev) => ({ ...prev, playing: !prev.playing }))}
+            loading={loading}
+          />
         </div>
 
         {cachedList.length > 0 && (

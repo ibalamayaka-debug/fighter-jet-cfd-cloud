@@ -57,6 +57,8 @@ export interface F16SimResponse {
   };
 }
 
+export type F16PaletteMode = 'starry' | 'scientific';
+
 export interface F16ViewState {
   showJet: boolean;
   showStreams: boolean;
@@ -65,4 +67,7 @@ export interface F16ViewState {
   wireframe: boolean;
   streamRadius: number;
   sliceOpacity: number;
+  palette: F16PaletteMode;
+  playing: boolean;
+  flowSpeed: number;
 }
