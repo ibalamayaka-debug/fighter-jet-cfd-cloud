@@ -1,0 +1,15 @@
+name = "f16-cfd-worker"
+main = "src/index.ts"
+compatibility_date = "2026-01-01"
+
+[[kv_namespaces]]
+binding = "F16_KV"
+id = "e2ec9fed9263408b9c00378aef8dcba4"
+
+[[kv_namespaces]]
+binding = "RATE_LIMIT_KV"
+id = "881e01edca014d0c8236b3c61688a937"
+
+[vars]
+ALLOWED_ORIGIN = "*"
+MAX_RUNS_PER_IP_PER_HOUR = "8"

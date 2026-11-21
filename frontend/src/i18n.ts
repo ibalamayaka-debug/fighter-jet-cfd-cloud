@@ -1,0 +1,127 @@
+export type Lang = 'zh' | 'en';
+
+export function detectInitialLang(): Lang {
+  try {
+    const q = new URLSearchParams(window.location.search).get('lang');
+    if (q === 'zh' || q === 'en') return q;
+    const saved = localStorage.getItem('f16cfd_lang');
+    if (saved === 'zh' || saved === 'en') return saved;
+  } catch {
+    // ignore
+  }
+  if (typeof navigator !== 'undefined' && navigator.language) {
+    return navigator.language.toLowerCase().startsWith('zh') ? 'zh' : 'en';
+  }
+  return 'zh';
+}
+
+export const TRANSLATIONS = {
+  zh: {
+    pageTitle: 'F-16 战斗机 3D 气动云仿真 — OpenFOAM Cloud CFD',
+    badge: 'F-16 战隼 1:1 CAD · OpenFOAM 云端 4 核求解',
+    title: 'F-16 战斗机云风洞',
+    subtitle: '真实开源战机 3D 周边气流速度、翼面受力与翼尖涡流线仿真',
+    sectionFlight: '飞行姿态与工况参数',
+    presets: {
+      climb: '大攻角爬升/进近 (12°, 120 m/s)',
+      cruise: '高空巡航 (4°, 220 m/s, 5 km)',
+      pass: '低空高速通场 (0°, 260 m/s)',
+    },
+    aoa: '飞行攻角 α (AoA)',
+    speed: '飞行速度 v',
+    altitude: '飞行高度 h (ISA 大气)',
+    altOptions: {
+      0: '0 m (海平面 ρ=1.225)',
+      5000: '5,000 m (中空 ρ=0.736)',
+      10000: '10,000 m (万米高空 ρ=0.414)',
+    },
+    runBtn: '云端 OpenFOAM 实时求解',
+    runningBtn: 'Modal 4 核 OpenFOAM 求解中...',
+    sectionVisual: 'VTK.js 3D 流场与速度切片',
+    showJet: 'F-16 机身压力分布 Cp',
+    showStreams: '3D 气流速度流线与边条涡',
+    showSliceY: '机身中轴速度切片 (XZ)',
+    showSliceZ: '机翼平面速度切片 (XY)',
+    wireframe: '机身网格线框',
+    streamRadius: '流线管径',
+    sliceOpacity: '切片透明度',
+    footerNote: '100% 云端 OpenFOAM snappyHexMesh + simpleFoam (k-ω SST) 计算',
+    kpiLift: '全机升力 Lift',
+    kpiDrag: '全机阻力 Drag',
+    kpiAero: '升阻比 L/D (CL / CD)',
+    kpiPeakU: '机身周边峰值风速 U_max',
+    kpiSource: '云端耗时 / 缓存',
+    hitSaved: (s: string) => `KV 秒开 (省 ${s}s)`,
+    cachedStrip: '云端已缓存飞行工况（0ms 秒开）：',
+    camChase: '3D 战机视角',
+    camWake: '尾流翼尖涡',
+    camSide: '机身侧面 XZ',
+    camTop: '翼面俯视 XY',
+    colorbarCp: '机身表面压力系数 Cp',
+    colorbarSuction: '-1.2 (低压升力区)',
+    colorbarStag: '+1.0 (机头驻点)',
+    colorbarVel: '战机周边气流速度 |U|',
+    hint: '左键 360° 旋转 · 滚轮缩放 · Shift+左键平移',
+    loadingCloud: '正在 Modal 4 核云端运行 F-16 OpenFOAM 3D 风洞...',
+    loadingCloudDesc: 'snappyHexMesh 贴体网格 → 4 核 simpleFoam (k-ω SST) → 3D 边条涡流线抽取（约 50s）',
+    loadingVtp: '正在加载 F-16 3D 气动网格与流线...',
+    emptyTitle: '选择飞行工况并点击“云端 OpenFOAM 实时求解”',
+    hideSidebar: '收起侧边栏',
+    showSidebar: '展开侧边栏',
+    tonnesUnit: '吨力',
+  },
+  en: {
+    pageTitle: 'F-16 Fighter Jet 3D Cloud CFD — OpenFOAM Aerodynamics Lab',
+    badge: 'F-16 Falcon 1:1 CAD · OpenFOAM 4-Core Cloud',
+    title: 'F-16 Fighter Cloud CFD',
+    subtitle: '3D airflow velocity, aerodynamic lift/drag forces & LEX wingtip vortices',
+    sectionFlight: 'Flight Attitude & Conditions',
+    presets: {
+      climb: 'High-AoA Approach (12°, 120 m/s)',
+      cruise: 'High-Alt Cruise (4°, 220 m/s, 5 km)',
+      pass: 'Low-Alt High-Speed (0°, 260 m/s)',
+    },
+    aoa: 'Angle of Attack α (AoA)',
+    speed: 'Airspeed v',
+    altitude: 'Altitude h (ISA Atmosphere)',
+    altOptions: {
+      0: '0 m (Sea Level ρ=1.225)',
+      5000: '5,000 m (Mid Alt ρ=0.736)',
+      10000: '10,000 m (Cruise Alt ρ=0.414)',
+    },
+    runBtn: 'Run Cloud OpenFOAM',
+    runningBtn: 'Solving 4-Core OpenFOAM on Modal...',
+    sectionVisual: 'VTK.js 3D Airflow & Slices',
+    showJet: 'F-16 Surface Pressure Cp',
+    showStreams: '3D Velocity Streamlines & Vortices',
+    showSliceY: 'Centerline Velocity Slice (XZ)',
+    showSliceZ: 'Wing-Plane Velocity Slice (XY)',
+    wireframe: 'Airframe Wireframe',
+    streamRadius: 'Streamline Radius',
+    sliceOpacity: 'Slice Opacity',
+    footerNote: '100% Cloud OpenFOAM snappyHexMesh + simpleFoam (k-ω SST)',
+    kpiLift: 'Full-Aircraft Lift',
+    kpiDrag: 'Total Aero Drag',
+    kpiAero: 'L/D Ratio (CL / CD)',
+    kpiPeakU: 'Peak Local Airspeed U_max',
+    kpiSource: 'Cloud Solve / Cache',
+    hitSaved: (s: string) => `KV HIT (${s}s saved)`,
+    cachedStrip: 'Cached Flight Regimes (Instant Load):',
+    camChase: '3D Chase',
+    camWake: 'Rear Vortices',
+    camSide: 'Side XZ',
+    camTop: 'Top Planform',
+    colorbarCp: 'Airframe Surface Pressure Cp',
+    colorbarSuction: '-1.2 (Lift Suction)',
+    colorbarStag: '+1.0 (Stagnation)',
+    colorbarVel: 'Surrounding Airflow Speed |U|',
+    hint: 'Drag: 360° Orbit · Scroll: Zoom · Shift+Drag: Pan',
+    loadingCloud: 'Running 4-Core F-16 OpenFOAM Wind Tunnel on Modal...',
+    loadingCloudDesc: 'snappyHexMesh → 4-core simpleFoam (k-ω SST) → 3D LEX/Wingtip streamlines (~50s)',
+    loadingVtp: 'Loading F-16 3D aero surface & streamlines...',
+    emptyTitle: 'Choose a flight condition and click "Run Cloud OpenFOAM"',
+    hideSidebar: 'Hide sidebar',
+    showSidebar: 'Show sidebar',
+    tonnesUnit: 'tf',
+  },
+} as const;
